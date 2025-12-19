@@ -1,0 +1,105 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def buy_call_payoff(S, K, P):
+#Buy Call: Profit = max(0, S - K) - P
+
+    return np.maximum(0, S - K) - P
+
+def sell_call_payoff(S, K, P):
+#Sell Call: Profit = P - max(0, S - K)
+    return P - np.maximum(0, S - K)
+
+def buy_put_payoff(S, K, P):
+Buy Put: Profit = max(0, K - S) - P
+    return np.maximum(0, K - S) - P
+
+def sell_put_payoff(S, K, P):
+Sell Put: Profit = P - max(0, K - S)
+    return P - np.maximum(0, K - S)
+
+def generate_spot_range(K, lower_offset=-50, upper_offset=30, step=1):
+    start = K + lower_offset
+    end = K + upper_offset
+    return np.arange(start, end + step, step)
+
+def plot_all_payoffs(K, P, lower_offset=-50, upper_offset=30, step=1):
+
+    S = generate_spot_range(K, lower_offset, upper_offset, step)
+
+    buy_call = buy_call_payoff(S, K, P)
+    sell_call = sell_call_payoff(S, K, P)
+    buy_put = buy_put_payoff(S, K, P)
+    sell_put = sell_put_payoff(S, K, P)
+
+    plt.figure(figsize=(12, 8))
+
+    # 1. Buy Call
+    plt.subplot(2, 2, 1)
+    plt.plot(S, buy_call, label="Buy Call", color="green")
+    plt.axhline(0, color="black", linewidth=0.8)
+    plt.axvline(K, color="gray", linestyle="--", linewidth=0.8, label="Strike (K)")
+    plt.title("Buying a Call Option")
+    plt.xlabel("Spot Price (S)")
+    plt.ylabel("Profit / Loss")
+    plt.legend()
+    plt.grid(True, linestyle="--", alpha=0.4)
+
+    # 2. Sell Call
+    plt.subplot(2, 2, 2)
+    plt.plot(S, sell_call, label="Sell Call", color="red")
+    plt.axhline(0, color="black", linewidth=0.8)
+    plt.axvline(K, color="gray", linestyle="--", linewidth=0.8, label="Strike (K)")
+    plt.title("Selling a Call Option")
+    plt.xlabel("Spot Price (S)")
+    plt.ylabel("Profit / Loss")
+    plt.legend()
+    plt.grid(True, linestyle="--", alpha=0.4)
+
+    # 3. Buy Put
+    plt.subplot(2, 2, 3)
+    plt.plot(S, buy_put, label="Buy Put", color="blue")
+    plt.axhline(0, color="black", linewidth=0.8)
+    plt.axvline(K, color="gray", linestyle="--", linewidth=0.8, label="Strike (K)")
+    plt.title("Buying a Put Option")
+    plt.xlabel("Spot Price (S)")
+    plt.ylabel("Profit / Loss")
+    plt.legend()
+    plt.grid(True, linestyle="--", alpha=0.4)
+
+    # 4. Sell Put
+    plt.subplot(2, 2, 4)
+    plt.plot(S, sell_put, label="Sell Put", color="orange")
+    plt.axhline(0, color="black", linewidth=0.8)
+    plt.axvline(K, color="gray", linestyle="--", linewidth=0.8, label="Strike (K)")
+    plt.title("Selling a Put Option")
+    plt.xlabel("Spot Price (S)")
+    plt.ylabel("Profit / Loss")
+    plt.legend()
+    plt.grid(True, linestyle="--", alpha=0.4)
+
+    plt.tight_layout()
+    plt.show()
+
+def main():
+    print("Vanilla Options Payoff Visualizer")
+    K = float(input("Enter Strike Price (K): "))
+    P = float(input("Enter Premium (P) (positive for buying, negative for selling): "))
+
+    print("Specify range of spot prices around K.")
+    lower_offset = float(input("Lower offset from K : "))
+    upper_offset = float(input("Upper offset from K : "))
+    step = float(input("Step size for spot prices : "))
+
+    plot_all_payoffs(K, P, lower_offset, upper_offset, step)
+if __name__ == "__main__":
+    main()
+"""
+Greeks in short
+1. Delta : This shows how much the premium price changes for each rupee change in spot price. Calls
+           generally have positive deltas (0 to +1) and puts have negative deltas (0 to -1).
+2. Gamma: basically it is the rate of change of delta. Higher gamma indicates higher risk in position
+3. Vega: Relative price change wrt to implied volatility. Options are often more expensive when
+         volatility is high.
+4. Theta: Option premiums often decay with time. Usually negative for calls and positive for puts.
+"""
