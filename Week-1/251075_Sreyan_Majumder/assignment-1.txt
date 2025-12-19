@@ -1,0 +1,62 @@
+1)
+arr = list(map(int, input().split()))
+m1 = max(arr)
+m2 = min(arr)
+print("Maximum is ",m1)
+print("Minimum is ",m2)
+
+2)
+s = input().strip()
+left = 0
+right = len(s) - 1
+is_palindrome = True
+while left < right:
+    if s[left] != s[right]:
+        is_palindrome = False
+        break
+    left += 1
+    right -= 1
+if is_palindrome:
+    print("Palindrome")
+else:
+    print("Not Palindrome")
+
+3)
+arr = list(map(int, input().split()))
+x = int(input())
+i = 0
+j = 1
+arr.sort()
+while(i<j and j<len(arr)):
+    y = arr[j] - arr[i]
+    if y == x :
+        print(arr[i],arr[j])
+        break
+    elif y<x :
+        j += 1
+    elif x<y :
+        i += 1
+
+4)
+arr = list(map(int, input().split()))
+a = int(input())
+b = int(input())
+c = int(input())
+low = 0
+mid = 0
+high = len(arr) - 1
+
+while mid <= high:
+    if arr[mid] == a:
+        arr[low],arr[mid] = arr[mid],arr[low]
+        low += 1
+        mid += 1
+
+    elif arr[mid] == b:
+        mid += 1
+
+    else:
+        arr[mid],arr[high] = arr[high],arr[mid]
+        high -= 1
+
+print(arr)
