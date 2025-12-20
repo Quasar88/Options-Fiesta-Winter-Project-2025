@@ -54,7 +54,7 @@ Gamma is highest when the option is ATM because a small price move can flip the 
 Theta measures the change in option premium as the time passes.
 It is negative for option buyers because as the time passes, value of premium decreases because the uncertainity decreases.
 4. Vega
-Vega measures the rate of change of premium with respect to change in volatility.
+Vega measures the rate of change of premium with respect to volatility.
 Volatility means how much the price can move. It is estimated by standard deviation.
 Higher volatility increases the probability of large favorable moves.
 Hence, Vega is positive for both call and put options.
